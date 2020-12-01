@@ -4,23 +4,52 @@ with open('input.txt', 'r') as content:
     numbers = content.readlines()
     numbers = list(map(int, numbers))
 
-# A more optimal solution is to sort the list of numbers, and after that take a look at the numbers from left side
-# and right side, and see if those summed are the magic number. A lot more effective than the brute force solution.
-# Works also with three numbers, just loop over all numbers as the third number, and then do the check from left and
-# right for the two other ones.
+# One bruteforce solution, and one that is a bit more intelligent...
 
 def calc(numbers):
     for x in numbers:
         for y in numbers:
             for z in numbers:
                 if x + y + z == 2020:
-                    print(x * y * z)
-                    return
+                    return x * y * z
 
-# Calculate runtime. ~0.1 second per run for the 10 runs.
+def calcOptimized(numbers):
+    numbers.sort()
+
+    numCount = len(numbers) - 1
+
+    i = 0
+    j = numCount
+
+    for num in numbers:
+        while i <= numCount and j >= 0:
+            if numbers[i] + numbers[j] + num == 2020:
+                return numbers[i] * numbers[j] * num
+            if numbers[i] + numbers[j] + num > 2020:
+                j -= 1
+            else:
+                i += 1
+
+
+# Runtime for Bruteforce:
+# 0:00:13.549834
+print("Running bruteforce:")
 start=datetime.now()
 
-for i in range(10):
+for i in range(100):
     calc(numbers)
 
-print(datetime.now() - start)
+print("Bruteforce time: ", datetime.now() - start)
+print("Bruteforce answer: ", calc(numbers))
+
+# Runtime for optimized:
+# 0:00:00.001819
+
+print("Running optimized:")
+start=datetime.now()
+
+for i in range(100):
+    calcOptimized(numbers)
+
+print("Optimized time: ", datetime.now() - start)
+print("Optimized answer: ", calcOptimized(numbers))
