@@ -29,6 +29,8 @@ def calcOptimized(numbers):
                 j -= 1
             else:
                 i += 1
+        i = 0
+        j = numCount
 
 
 # Runtime for Bruteforce:
