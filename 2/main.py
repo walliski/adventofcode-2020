@@ -7,12 +7,12 @@ validCount, validCount2 = 0, 0
 
 for line in lines:
     minMaxCounts, letter, password = line.replace(":", "").split(" ")
-    minCount, maxCount = minMaxCounts.split("-")
+    minCount, maxCount = map(int, minMaxCounts.split("-"))
 
-    if int(minCount) <= password.count(letter) <= int(maxCount):
+    if minCount <= password.count(letter) <= maxCount:
         validCount += 1
 
-    if (password[int(minCount) - 1] == letter) != (password[int(maxCount) - 1] == letter):
+    if (password[minCount - 1] == letter) != (password[maxCount - 1] == letter):
         validCount2 += 1
 
 print("Valid count step 1: ", validCount)
