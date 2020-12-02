@@ -13,4 +13,16 @@ for line in lines:
     if int(minCount) <= password.count(letter) <= int(maxCount):
         validCount += 1
 
-print("Valid count: ", validCount)
+print("Valid count step 1: ", validCount)
+
+validCount = 0
+
+for line in lines:
+    splitLine = line.replace(":", "")
+    positions, letter, password = splitLine.split(" ")
+    posA, posB = positions.split("-")
+
+    if (password[int(posA) - 1] == letter) != (password[int(posB) - 1] == letter):
+        validCount += 1
+
+print("Valid count step 2: ", validCount)
