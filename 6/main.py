@@ -22,10 +22,10 @@ for line in lines:
     else:
         groupCount += 1
 
-    for char in line.strip():
-        if char not in charCount:
-            charCount[char] = 0
-        charCount[char] += 1
+        for char in line.strip():
+            if char not in charCount:
+                charCount[char] = 0
+            charCount[char] += 1
 
 print("Step 1 sum: ", answerCounts)
 print("Step 2 sum: ", everyoneCount)
