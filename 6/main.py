@@ -20,12 +20,14 @@ for line in lines:
         charCount = {}
         groupCount = 0
     else:
-        groupCount += 1
-
+        # Calculate Step 1 char counts for a line
         for char in line.strip():
             if char not in charCount:
                 charCount[char] = 0
             charCount[char] += 1
+
+        # Increment amount of answers in a group
+        groupCount += 1
 
 print("Step 1 sum: ", answerCounts)
 print("Step 2 sum: ", everyoneCount)
