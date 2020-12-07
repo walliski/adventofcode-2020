@@ -12,12 +12,13 @@ with open('input.txt', 'r') as content:
 # }
 
 bagInfo = {}
+nameRe = re.compile(r'^(?P<name>\S+ \S+) bags')
+containsRe = re.compile(r'(?P<count>\d+) (?P<name>\S+ \S+) bags?[.,]')
 for line in lines:
-    nameMatch = re.match(r'^(?P<name>\S+ \S+) bags', line)
-    name = nameMatch.group("name")
+    name = nameRe.match(line).group("name")
 
     contains = {}
-    containsIter = re.finditer(r'(?P<count>\d+) (?P<name>\S+ \S+) bags?[.,]', line)
+    containsIter = containsRe.finditer(line)
     for i in containsIter:
         contains[i.group("name")] = int(i.group("count"))
 
