@@ -14,3 +14,14 @@ for line in lines:
         contains[i.group("name")] = int(i.group("count"))
 
     bagInfo[name] = contains
+
+def carry_count(bagInfo, target_name, bag_name):
+    if target_name == bag_name:
+        return 1
+
+    if len(bagInfo[bag_name]) > 0:
+        return sum([carry_count(bagInfo, target_name, bag) for bag in bagInfo[bag_name]])
+
+    return 0
+
+print(len([bag for bag in bagInfo.keys() if carry_count(bagInfo, "shiny gold", bag) > 0 and bag != "shiny gold"]))
