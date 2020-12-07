@@ -3,6 +3,14 @@ import re
 with open('input.txt', 'r') as content:
     lines = content.readlines()
 
+# Bag info:
+# {
+#     "bag name": {
+#         "bag name1": 1,
+#         "bag name2": 2
+#     }
+# }
+
 bagInfo = {}
 for line in lines:
     nameMatch = re.match(r'^(?P<name>\S+ \S+) bags', line)
