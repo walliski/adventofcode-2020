@@ -24,4 +24,19 @@ def carry_count(bagInfo, target_name, bag_name):
 
     return 0
 
-print(len([bag for bag in bagInfo.keys() if carry_count(bagInfo, "shiny gold", bag) > 0 and bag != "shiny gold"]))
+def bag_count_inside(bagInfo, target_name, level=0):
+    if len(bagInfo[target_name]) == 0:
+        return 1
+
+    count = 0
+    for bag, contentCount in bagInfo[target_name].items():
+        count += bag_count_inside(bagInfo, bag, level + 1) * contentCount
+
+    # We add one unless we are at the top level, to count the bags themselves.
+    if level != 0:
+        count += 1
+
+    return count
+
+print("Shiny gold is in this many cases:", len([bag for bag in bagInfo.keys() if carry_count(bagInfo, "shiny gold", bag) > 0 and bag != "shiny gold"]))
+print("And a shiny gold contains this many bags:", bag_count_inside(bagInfo, "shiny gold"))
