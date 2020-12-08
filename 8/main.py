@@ -33,10 +33,7 @@ crash = run_program(lines)
 print("Accumulator value before loop exited: ", crash["acc"])
 
 for i in range(len(lines)):
-    #print("Running version:", i )
     op, arg = lines[i].strip().split(" ")
-
-    print("run", i)
 
     if op == "acc":
         continue
