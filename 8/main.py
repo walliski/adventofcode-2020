@@ -12,10 +12,10 @@ while (opCount[curInstruction] < 1):
 
     if op == "acc":
         acc += int(arg)
+        curInstruction += 1
     elif op == "jmp":
         curInstruction += int(arg)
-        continue
-
-    curInstruction += 1
+    elif op == "nop":
+        curInstruction += 1
 
 print("Accumulator value before loop exited: ", acc)
