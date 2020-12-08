@@ -1,21 +1,13 @@
 with open('input.txt', 'r') as content:
     lines = content.readlines()
 
-# Exitcode 1 means that we crashed in a loop
-initialState = {
-    "curInstruction": 0,
-    "acc": 0,
-    "opCount": [0] * len(lines),
-    "exitCode": 0
-}
+def run_program(program):
+    opCount = [0] * len(program)
+    curInstruction = 0
+    acc = 0
 
-def run_program(program, state):
-    opCount = state["opCount"]
-    curInstruction = state["curInstruction"]
-    acc = state["acc"]
-
-    while (opCount[curInstruction] < 1):
-        op, arg = lines[curInstruction].strip().split(" ")
+    while (curInstruction < len(program) and opCount[curInstruction] < 1):
+        op, arg = program[curInstruction].strip().split(" ")
 
         opCount[curInstruction] += 1
 
@@ -27,12 +19,38 @@ def run_program(program, state):
         elif op == "nop":
             curInstruction += 1
 
+    exitCode = 1
+
+    if curInstruction >= len(program):
+        exitCode = 0
+
     return {
-        "curInstruction": curInstruction,
         "acc": acc,
-        "opCount": opCount,
-        "exitCode": 1
+        "exitCode": exitCode
     }
 
-crash = run_program(lines, initialState)
+crash = run_program(lines)
 print("Accumulator value before loop exited: ", crash["acc"])
+
+for i in range(len(lines)):
+    #print("Running version:", i )
+    op, arg = lines[i].strip().split(" ")
+
+    print("run", i)
+
+    if op == "acc":
+        continue
+
+    newOp = ""
+    if op == "jmp":
+        newOp = "nop"
+    elif op == "nop":
+        newOp = "jmp"
+
+    fixed = lines.copy()
+    fixed[i] = fixed[i].replace(op, newOp)
+
+    result = run_program(fixed)
+    if result["exitCode"] == 0:
+        print("Acc value on successful run?", result["acc"])
+        break
